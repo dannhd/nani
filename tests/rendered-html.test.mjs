@@ -33,5 +33,10 @@ test("server-renders the Spider Date experience", async () => {
   assert.match(html, /data-answer="yes"/);
   assert.match(html, /data-answer="no"/);
   assert.match(html, /aria-live="polite"/);
+  assert.match(html, /data-coupon-stage/);
+  assert.match(html, /assets\/coupon-photo\.jpeg/);
+  assert.match(html, /¡Gracias por aceptar la cita!/);
+  assert.match(html, /Un millón de besos de Andrés/);
+  assert.match(html, /Acepto mi cupón/);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/);
 });

@@ -25,7 +25,7 @@
         <span class="brand-badge__title">SPIDER DATE</span>
       </header>
 
-      <section class="question-card" aria-labelledby="question-title">
+      <section class="question-card" aria-labelledby="question-title" data-question-card>
         <span class="corner corner--one" aria-hidden="true"></span>
         <span class="corner corner--two" aria-hidden="true"></span>
         <span class="question-card__eyebrow">UNA PREGUNTA IMPORTANTE</span>
@@ -41,6 +41,51 @@
         <p class="answer-status" data-answer-status aria-live="polite">
           Elige sabiamente, héroe del barrio.
         </p>
+      </section>
+
+      <section class="coupon-stage" data-coupon-stage aria-labelledby="coupon-title" hidden>
+        <div class="heart-burst" aria-hidden="true">
+          <span>♥</span><span>♥</span><span>♥</span>
+          <span>♥</span><span>♥</span><span>♥</span>
+        </div>
+
+        <article class="coupon-ticket" tabindex="-1" data-coupon-ticket>
+          <div class="coupon-photo-panel">
+            <div class="coupon-photo-frame">
+              <img
+                src="assets/coupon-photo.jpeg"
+                alt="Andrés y su cita en la fotografía del cupón"
+                decoding="async"
+              />
+            </div>
+            <span class="photo-heart photo-heart--one" aria-hidden="true">♥</span>
+            <span class="photo-heart photo-heart--two" aria-hidden="true">♥</span>
+          </div>
+
+          <div class="coupon-details">
+            <div class="coupon-details__frame">
+              <span class="coupon-eyebrow">CUPÓN ESPECIAL</span>
+              <h2 id="coupon-title">¡Gracias por aceptar la cita! ❤️</h2>
+              <p class="coupon-intro">Puedes canjear este cupón por:</p>
+
+              <div class="coupon-options">
+                <strong>💋 Un millón de besos de Andrés</strong>
+                <span>o</span>
+                <strong>🎁 Un regalito especial</strong>
+              </div>
+
+              <div class="coupon-validity">
+                <span>Válido exclusivamente para esta cita ❤️</span>
+                <small>Sin fecha de vencimiento</small>
+              </div>
+
+              <button class="coupon-accept" type="button" data-coupon-accept>
+                ❤️ Acepto mi cupón
+              </button>
+              <p class="coupon-status" data-coupon-status aria-live="polite"></p>
+            </div>
+          </div>
+        </article>
       </section>
 
       <footer class="scene-footer">

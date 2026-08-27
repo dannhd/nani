@@ -4,8 +4,21 @@
     const noButton = document.querySelector('[data-answer="no"]');
     const status = document.querySelector("[data-answer-status]");
     const card = document.querySelector(".question-card");
+    const couponStage = document.querySelector("[data-coupon-stage]");
+    const couponTicket = document.querySelector("[data-coupon-ticket]");
+    const couponAccept = document.querySelector("[data-coupon-accept]");
+    const couponStatus = document.querySelector("[data-coupon-status]");
 
-    if (!yesButton || !noButton || !status || !card) return;
+    if (
+      !yesButton ||
+      !noButton ||
+      !status ||
+      !card ||
+      !couponStage ||
+      !couponTicket ||
+      !couponAccept ||
+      !couponStatus
+    ) return;
     if (card.dataset.interactionReady === "true") return;
     card.dataset.interactionReady = "true";
 
@@ -44,10 +57,31 @@
     });
 
     yesButton.addEventListener("click", () => {
-      card.classList.remove("is-accepted");
-      void card.offsetWidth;
-      card.classList.add("is-accepted");
-      status.textContent = "¡Plan confirmado! Tu amigable cita del barrio está lista. 🕷";
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      card.classList.add("is-leaving");
+      status.textContent = "Preparando tu cupón especial...";
+
+      window.setTimeout(
+        () => {
+          card.hidden = true;
+          couponStage.hidden = false;
+          window.requestAnimationFrame(() => {
+            couponStage.classList.add("is-visible");
+            couponTicket.focus({ preventScroll: true });
+          });
+        },
+        reducedMotion ? 10 : 360,
+      );
+    });
+
+    couponAccept.addEventListener("click", () => {
+      couponAccept.disabled = true;
+      couponAccept.textContent = "❤️ Cupón aceptado";
+      couponStatus.textContent = "Cupón oficialmente aceptado ❤️";
+      couponTicket.classList.add("is-redeemed");
     });
 
     window.addEventListener("resize", applyScales, { passive: true });
