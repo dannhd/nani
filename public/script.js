@@ -80,7 +80,7 @@
     couponAccept.addEventListener("click", () => {
       couponAccept.disabled = true;
       couponAccept.textContent = "❤️ Cupón aceptado";
-      couponStatus.textContent = "Cupón oficialmente aceptado ❤️";
+      couponStatus.textContent = "Enviar captura para canjearlo";
       couponTicket.classList.add("is-redeemed");
     });
 

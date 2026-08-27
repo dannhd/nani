@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 async function render() {
@@ -38,5 +39,7 @@ test("server-renders the Spider Date experience", async () => {
   assert.match(html, /¡Gracias por aceptar la cita!/);
   assert.match(html, /Un millón de besos de Andrés/);
   assert.match(html, /Acepto mi cupón/);
+  const script = await readFile(new URL("../script.js", import.meta.url), "utf8");
+  assert.match(script, /Enviar captura para canjearlo/);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/);
 });
