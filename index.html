@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#03162f" />
+    <meta
+      name="description"
+      content="Una experiencia interactiva pixel-art inspirada en Spider-Man y Nueva York."
+    />
+    <title>Spider Date — Una pregunta del barrio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="scene">
+      <div class="scene__art" aria-hidden="true"></div>
+      <div class="scene__wash" aria-hidden="true"></div>
+      <div class="city-side city-side--left" aria-hidden="true"></div>
+      <div class="city-side city-side--right" aria-hidden="true"></div>
+      <div class="scanlines" aria-hidden="true"></div>
+
+      <header class="brand-badge" aria-label="Spider Date, Nueva York">
+        <span class="brand-badge__top">NYC // 20:00</span>
+        <span class="brand-badge__title">SPIDER DATE</span>
+      </header>
+
+      <section class="question-card" aria-labelledby="question-title">
+        <span class="corner corner--one" aria-hidden="true"></span>
+        <span class="corner corner--two" aria-hidden="true"></span>
+        <span class="question-card__eyebrow">UNA PREGUNTA IMPORTANTE</span>
+        <h1 id="question-title">¿Aceptarías ver el hombre araña con su novio?</h1>
+        <div class="answers" aria-label="Elige tu respuesta">
+          <button class="answer answer--yes" type="button" data-answer="yes" aria-label="Sí, acepto">
+            SÍ
+          </button>
+          <button class="answer answer--no" type="button" data-answer="no" aria-label="No">
+            NO
+          </button>
+        </div>
+        <p class="answer-status" data-answer-status aria-live="polite">
+          Elige sabiamente, héroe del barrio.
+        </p>
+      </section>
+
+      <footer class="scene-footer">
+        <span>QUEENS</span><span aria-hidden="true">◆</span><span>BROOKLYN</span>
+      </footer>
+    </main>
+  </body>
+</html>
