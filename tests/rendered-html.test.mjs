@@ -43,5 +43,6 @@ test("server-renders the Spider Date experience", async () => {
   assert.match(script, /Enviar captura para canjearlo/);
   assert.match(script, /moveNoRandomly/);
   assert.match(script, /is-roaming/);
+  assert.match(script, /keepNoVisible/);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/);
 });

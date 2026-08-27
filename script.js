@@ -25,6 +25,7 @@
     let noScale = 1;
     let yesScale = 1;
     let noClicks = 0;
+    let visibilityTimer;
 
     const replies = [
       "¿Seguro? El SÍ acaba de ganar poderes.",
@@ -40,36 +41,66 @@
     const randomBetween = (minimum, maximum) =>
       minimum + Math.random() * Math.max(0, maximum - minimum);
 
+    const keepNoVisible = () => {
+      if (!noButton.classList.contains("is-roaming")) return;
+
+      const margin = 12;
+      const rect = noButton.getBoundingClientRect();
+      const viewportWidth = document.documentElement.clientWidth;
+      const viewportHeight = window.innerHeight;
+      const shiftX =
+        rect.left < margin
+          ? margin - rect.left
+          : rect.right > viewportWidth - margin
+            ? viewportWidth - margin - rect.right
+            : 0;
+      const shiftY =
+        rect.top < margin
+          ? margin - rect.top
+          : rect.bottom > viewportHeight - margin
+            ? viewportHeight - margin - rect.bottom
+            : 0;
+
+      if (shiftX || shiftY) {
+        noButton.style.left = `${Number.parseFloat(noButton.style.left) + shiftX}px`;
+        noButton.style.top = `${Number.parseFloat(noButton.style.top) + shiftY}px`;
+      }
+    };
+
+    const scheduleVisibilityCheck = () => {
+      window.clearTimeout(visibilityTimer);
+      visibilityTimer = window.setTimeout(keepNoVisible, 460);
+    };
+
     const moveNoRandomly = (startingRect) => {
       const buttonWidth = noButton.offsetWidth;
       const buttonHeight = noButton.offsetHeight;
       const scaledWidth = buttonWidth * noScale;
       const scaledHeight = buttonHeight * noScale;
-      const horizontalInset = (buttonWidth - scaledWidth) / 2;
-      const verticalInset = (buttonHeight - scaledHeight) / 2;
       const viewportWidth = document.documentElement.clientWidth;
       const viewportHeight = window.innerHeight;
       const margin = 12;
 
       if (!noButton.classList.contains("is-roaming")) {
         noButton.classList.add("is-roaming");
-        noButton.style.left = `${startingRect.left - horizontalInset}px`;
-        noButton.style.top = `${startingRect.top - verticalInset}px`;
+        noButton.style.left = `${startingRect.left}px`;
+        noButton.style.top = `${startingRect.top}px`;
         void noButton.offsetWidth;
       }
 
       const visibleLeft = randomBetween(
         margin,
-        viewportWidth - scaledWidth - margin,
+        Math.max(margin, viewportWidth - scaledWidth - margin),
       );
       const visibleTop = randomBetween(
         margin,
-        viewportHeight - scaledHeight - margin,
+        Math.max(margin, viewportHeight - scaledHeight - margin),
       );
 
       window.requestAnimationFrame(() => {
-        noButton.style.left = `${visibleLeft - horizontalInset}px`;
-        noButton.style.top = `${visibleTop - verticalInset}px`;
+        noButton.style.left = `${visibleLeft}px`;
+        noButton.style.top = `${visibleTop}px`;
+        scheduleVisibilityCheck();
       });
     };
 
@@ -119,6 +150,12 @@
       couponAccept.textContent = "❤️ Cupón aceptado";
       couponStatus.textContent = "Enviar captura para canjearlo";
       couponTicket.classList.add("is-redeemed");
+    });
+
+    noButton.addEventListener("transitionend", (event) => {
+      if (event.propertyName === "left" || event.propertyName === "top") {
+        keepNoVisible();
+      }
     });
 
     window.addEventListener(
