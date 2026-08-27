@@ -41,5 +41,7 @@ test("server-renders the Spider Date experience", async () => {
   assert.match(html, /Acepto mi cupón/);
   const script = await readFile(new URL("../script.js", import.meta.url), "utf8");
   assert.match(script, /Enviar captura para canjearlo/);
+  assert.match(script, /moveNoRandomly/);
+  assert.match(script, /is-roaming/);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/);
 });

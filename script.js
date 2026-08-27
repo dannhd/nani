@@ -37,6 +37,42 @@
 
     const maxYesScale = () => (window.innerWidth <= 430 ? 1.7 : 2.05);
 
+    const randomBetween = (minimum, maximum) =>
+      minimum + Math.random() * Math.max(0, maximum - minimum);
+
+    const moveNoRandomly = (startingRect) => {
+      const buttonWidth = noButton.offsetWidth;
+      const buttonHeight = noButton.offsetHeight;
+      const scaledWidth = buttonWidth * noScale;
+      const scaledHeight = buttonHeight * noScale;
+      const horizontalInset = (buttonWidth - scaledWidth) / 2;
+      const verticalInset = (buttonHeight - scaledHeight) / 2;
+      const viewportWidth = document.documentElement.clientWidth;
+      const viewportHeight = window.innerHeight;
+      const margin = 12;
+
+      if (!noButton.classList.contains("is-roaming")) {
+        noButton.classList.add("is-roaming");
+        noButton.style.left = `${startingRect.left - horizontalInset}px`;
+        noButton.style.top = `${startingRect.top - verticalInset}px`;
+        void noButton.offsetWidth;
+      }
+
+      const visibleLeft = randomBetween(
+        margin,
+        viewportWidth - scaledWidth - margin,
+      );
+      const visibleTop = randomBetween(
+        margin,
+        viewportHeight - scaledHeight - margin,
+      );
+
+      window.requestAnimationFrame(() => {
+        noButton.style.left = `${visibleLeft - horizontalInset}px`;
+        noButton.style.top = `${visibleTop - verticalInset}px`;
+      });
+    };
+
     const applyScales = () => {
       yesScale = Math.min(yesScale, maxYesScale());
       yesButton.style.setProperty("--scale", yesScale.toFixed(3));
@@ -48,12 +84,13 @@
     };
 
     noButton.addEventListener("click", () => {
+      const startingRect = noButton.getBoundingClientRect();
       noClicks += 1;
       noScale = Math.max(0.36, noScale * 0.85);
       yesScale = Math.min(maxYesScale(), yesScale * 1.15);
-      card.classList.remove("is-accepted");
       status.textContent = replies[Math.min(noClicks - 1, replies.length - 1)];
       applyScales();
+      moveNoRandomly(startingRect);
     });
 
     yesButton.addEventListener("click", () => {
@@ -84,7 +121,16 @@
       couponTicket.classList.add("is-redeemed");
     });
 
-    window.addEventListener("resize", applyScales, { passive: true });
+    window.addEventListener(
+      "resize",
+      () => {
+        applyScales();
+        if (noButton.classList.contains("is-roaming")) {
+          moveNoRandomly(noButton.getBoundingClientRect());
+        }
+      },
+      { passive: true },
+    );
   };
 
   if (document.readyState === "loading") {
